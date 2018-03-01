@@ -1,13 +1,9 @@
 package com.rdalabs.drivesmartly.drive_smartlypoc.io;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.inject.Inject;
@@ -21,11 +17,10 @@ import roboguice.service.RoboService;
 
 
 public abstract class AbstractGatewayService extends RoboService {
-    public static final int NOTIFICATION_ID = 1;
     private static final String TAG = AbstractGatewayService.class.getName();
     private final IBinder binder = new AbstractGatewayServiceBinder();
-    @Inject
-    protected NotificationManager notificationManager;
+//    @Inject
+//    protected NotificationManager notificationManager;
     protected Context ctx;
     protected boolean isRunning = false;
     protected Long queueCounter = 0L;
@@ -59,7 +54,7 @@ public abstract class AbstractGatewayService extends RoboService {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "Destroying service...");
-        notificationManager.cancel(NOTIFICATION_ID);
+        //notificationManager.cancel(NOTIFICATION_ID);
         t.interrupt();
         Log.d(TAG, "Service destroyed.");
     }
@@ -89,30 +84,6 @@ public abstract class AbstractGatewayService extends RoboService {
         } catch (InterruptedException e) {
             job.setState(ObdCommandJob.ObdCommandJobState.QUEUE_ERROR);
             Log.e(TAG, "Failed to queue job.");
-        }
-    }
-
-    /**
-     * Show a notification while this service is running.
-     */
-    protected void showNotification(String contentTitle, String contentText, int icon, boolean ongoing, boolean notify, boolean vibrate) {
-        final PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, MainActivity.class), 0);
-        final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ctx);
-        notificationBuilder.setContentTitle(contentTitle)
-                .setContentText(contentText).setSmallIcon(icon)
-                .setContentIntent(contentIntent)
-                .setWhen(System.currentTimeMillis());
-        // can cancel?
-        if (ongoing) {
-            notificationBuilder.setOngoing(true);
-        } else {
-            notificationBuilder.setAutoCancel(true);
-        }
-        if (vibrate) {
-            notificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
-        }
-        if (notify) {
-            notificationManager.notify(NOTIFICATION_ID, notificationBuilder.getNotification());
         }
     }
 

@@ -17,13 +17,10 @@ import com.rdalabs.drivesmartly.drive_smartlypoc.config.ObdConfig;
 import java.util.ArrayList;
 import java.util.Set;
 
-/**
- * Configuration com.github.pires.obd.reader.activity.
- */
 public class ConfigActivity extends PreferenceActivity {
 
     public static final String BLUETOOTH_LIST_KEY = "bluetooth_list_preference";
-    public static final String ENABLE_BT_KEY = "enable_bluetooth_preference";
+//    public static final String ENABLE_BT_KEY = "enable_bluetooth_preference";
 
     public static int getObdUpdatePeriod() {
         int period = 5000;

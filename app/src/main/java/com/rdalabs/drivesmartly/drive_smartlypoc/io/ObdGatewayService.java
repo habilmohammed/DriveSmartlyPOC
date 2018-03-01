@@ -83,8 +83,6 @@ public class ObdGatewayService extends AbstractGatewayService {
             Log.d(TAG, "Stopping Bluetooth discovery.");
             btAdapter.cancelDiscovery();
 
-            showNotification(getString(R.string.notification_action), getString(R.string.service_starting), R.drawable.ic_btcar, true, true, false);
-
             try {
                 startObdConnection();
             } catch (Exception e) {
@@ -98,7 +96,6 @@ public class ObdGatewayService extends AbstractGatewayService {
                 stopService();
                 throw new IOException();
             }
-            showNotification(getString(R.string.notification_action), getString(R.string.service_started), R.drawable.ic_btcar, true, true, false);
         }
     }
 
@@ -233,7 +230,6 @@ public class ObdGatewayService extends AbstractGatewayService {
     public void stopService() {
         Log.d(TAG, "Stopping service..");
 
-        notificationManager.cancel(NOTIFICATION_ID);
         jobsQueue.clear();
         isRunning = false;
 

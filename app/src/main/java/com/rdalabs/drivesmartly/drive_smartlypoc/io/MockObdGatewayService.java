@@ -108,8 +108,6 @@ public class MockObdGatewayService extends AbstractGatewayService {
      */
     public void stopService() {
         Log.d(TAG, "Stopping service..");
-
-        notificationManager.cancel(NOTIFICATION_ID);
         jobsQueue.clear();
         isRunning = false;
 
